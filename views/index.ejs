@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>kSTR App</title>
+
+    <script src="https://cdn.lr-ingest.io/LogRocket.min.js" crossorigin="anonymous"></script>
+    <script>window.LogRocket && window.LogRocket.init('pcp3y1/website');</script>
+
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <nav class="navbar navbar-dark bg-primary">
+                <h1 class="navbar-brand mb-0">kSTR Video Streaming</h1>
+            </nav>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 m-auto pt-4">
+                    <h1 class="text-center mb-5">Sample Section Heading for the ejs</h1>
+
+                    <video controls width="100%" poster="<%= image %>">
+                        <source src="<%= video_path %>" type="video/mp4">
+
+                        Sorry, your browser doesn't support embedded videos.
+                    </video>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <a href="https://github.com/KIliuchok/" class="navbar brand mb-0">GitHub Profile</a>
+        </footer>
+    </div>
+</body>
+</html>
