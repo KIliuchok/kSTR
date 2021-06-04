@@ -14,7 +14,6 @@
     "helmet": "^4.6.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
-    "logrocket": "^1.1.0",
     "node-fetch": "^2.6.1",
     "node-postgres": "^0.6.2",
     "nodemon": "^2.0.7",

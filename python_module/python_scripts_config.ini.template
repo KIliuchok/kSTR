@@ -1,0 +1,9 @@
+[postgresql]
+host=
+database=
+user=
+password=
+
+[directories]
+shows_dir=
+images_dir=

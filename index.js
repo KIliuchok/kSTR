@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const { exec } = require('child_process');
-const { response, json } = require('express');
+const { response, json, request } = require('express');
 const { stdout, stderr } = require('process');
-const db_users = require('./db_queries_users');
 const db_videos = require('./db_queries_videos');
 const https = require('https');
 const unirest = require('unirest');
@@ -12,23 +11,12 @@ const fetch = require('node-fetch');
 
 var config = require('./config.js');
 
-const LogRocket = require('logrocket');
-
-
-LogRocket.init('pcp3y1/website');
-
-
-// Database shiz
-
 // Certificate
 
 options = {
 key: fs.readFileSync(config.secure.privkey_location, 'utf8'),
 cert: fs.readFileSync(config.secure.cert_location, 'utf8')
 };
-
-
-
 
 const app = express();
 const http = express();
@@ -38,16 +26,9 @@ app.use(express.static(__dirname+'/public'));
 app.use(express.json());
 app.use(express.urlencoded());
 
-// File System get Requests I assume
-
-    // Change to DB path TODO
+// Folders to images and TV Show assets
 const assets = config.library;
 const images = config.images;
-
-
-//
-//
-//
 
 router.get('/', (req, res) => {
 
@@ -184,28 +165,19 @@ router.get('/video/:videName', (req, res) => {
     });
 });
 
-//
-//
+// TODO: Replace python code which contacts with Database with native nodejs library
 //
 
-// Users part
-
-router.get('/users', db_users.getUsers)
-router.get('/users/:id', db_users.getUserById)
-router.post('/users', db_users.createUser)
-router.put('/users/:id', db_users.updateUser)
-router.delete('/users/:id', db_users.deleteUser)
-
-router.get('/getShowNames', db_videos.getShowNames)
+//router.get('/getShowNames', db_videos.getShowNames)
+//router.get('/getEpisodes/:showName', db_videos.getEpisodeNames)
 
 router.get('/dir', (req, res) => {
-    exec(`python3.9 ${__dirname}/python_module/get_all_shows.py`, (err, stdout, stderr) =>{
+    exec(`python3.9 python_module/get_all_shows.py`, (err, stdout, stderr) =>{
         if (err) {
             throw err
         }
         
         var string_of_shows = stdout;
-        var list_of_tmdb_results = [];
         var list_of_shows = string_of_shows.split(',')
         list_of_shows.pop(list_of_shows.length)
         var list_of_urls = []
@@ -220,7 +192,7 @@ router.get('/dir', (req, res) => {
         
         list_of_shows.forEach(element =>{
             var temp = element.slice(0,15)
-            fetch(`https://api.themoviedb.org/3/search/tv?api_key=881ec62b5040a4be19ab4f6e242a4624&language=en-US&page=1&query=${temp}&include_adult=true`)
+            fetch(`https://api.themoviedb.org/3/search/tv?api_key=${config.tmdb.api_key}&language=en-US&page=1&query=${temp}&include_adult=true`)
             .then(res => res.json())
             .then(json => {
                 if (typeof json.results[0] === 'undefined') {
@@ -233,6 +205,7 @@ router.get('/dir', (req, res) => {
                     list_of_images.push(`https://image.tmdb.org/t/p/w500${json.results[0].poster_path}`)
                     var truncated = json.results[0].overview
 
+                    // Cropping the overview length if > than 275 char
                     if (truncated.length > 275) {
                         truncated = truncated.substr(0,275) + '...'
                     }
@@ -375,34 +348,6 @@ router.get('/shows/:showName/:episode', (req, res) => {
 })
 
 
-// The Movie DB API to find info about shows, movies
-
-
-function TVInfo(showName) {
-
-    var request = unirest("GET", "https://api.themoviedb.org/3/search/tv");
-
-    request.query({
-        "api_key": "881ec62b5040a4be19ab4f6e242a4624",
-        "page": "1",
-        "query": `${showName}`,
-        "include_adult": "true"
-    }
-    )
-    request.end(function (res) {
-
-        if (res.error) throw new Error(res.error);
-
-        return res.body.results
-        
-    });
-
-}
-
-	
-
-
-
 // REGISTERING AND LOGGING IN FUNCTIONALITY
 
 router.get('/login',(req,res)=>{
@@ -430,14 +375,15 @@ router.get('/logout', (req, res) => {
 //
 
 setInterval(() =>{
-    exec (`python3.9 ${__dirname}/python_module/parse_files.py`, (err, stdout, stderr) =>{
+    exec (`python3.9 python_module/parse_files.py`, (err, stdout, stderr) =>{
+        console.log(stdout)
         if (err) {
             throw err
         }
         console.log("Scanned Library Files");
         console.log(stdout);
     })
-}, 250000)
+}, 2500)
 
 
 app.use(router);
