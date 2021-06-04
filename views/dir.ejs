@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head.ejs') %>
+</head>
+<body>
+    <div class="app">
+        <header>
+            <%- include('navbar.ejs') %>
+        </header>
+        
+        <h1>List of All Shows</h1>
+
+        <div class="container-fluid content-row">
+        <div class="row row-cols-1 row-cols-md-2 g-4 col-sm-12">
+            <% for (var i = 0; i < list_of_shows.length; i ++) { %>
+                <div class="col">
+
+                    <div class="card h-100" style="max-width: 540px;">
+                        <a href="<%= `/shows/${list_of_shows[i]}` %>">
+                        <div class="row g-0">
+                            <div class="col-md-4">           
+                                <img src="<%= list_of_images[i] %>" alt="" width="200">
+                            </div> 
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    
+                                    <h5 class="card-title"><%= show_name[i] %></h5>
+                                    <p class="card-text"><%= overview[i] %></p>
+                                    <p class="card-text">Aired: <%= aired[i] %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+
+                </div>
+            
+            <% } %>
+        </div>
+        </div>
+        <footer>
+            <a href="https://github.com/KIliuchok/" class="navbar brand mb-0">GitHub Profile</a>
+        </footer>
+    </div>
+</body>
+</html>

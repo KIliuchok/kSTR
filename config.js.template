@@ -1,0 +1,42 @@
+var config = {}
+
+// Path for private key and certificate for HTTPS functionality
+// Please leave empty for http only
+config.secure = {
+                    privkey_location: "",
+                    cert_location: ""
+                }
+
+// Main Library folder location
+// Indicate relative path to the website folder in case that
+// Media Library is inside the Website folder
+// DEFAULT = "Library"
+config.library = "Library"
+
+// Images folder location
+// Images are generated for thumbnail, and selective previews
+// DEFAULT = "images"
+config.images = "images"
+
+// Default Ports
+// Currently the application is made specifically for https implementation
+// with all http requests being redirected to https
+config.ports = {}
+config.ports.https = 443; 
+config.ports.http = 80;
+
+//TMDB API Integration
+config.tmdb = {}
+config.tmdb.enable = true
+config.tmdb.api_key = ""
+
+config.ffmpeg = {}
+//Path to ffmpeg for video conversion + thumbnail generation
+config.ffmpeg.location = "ffmpeg"
+//Settings for video conversion process
+config.ffmpeg.settings = {}
+
+// Python 3+ executable if not in PATH
+config.python_path = ""
+
+module.exports = config;

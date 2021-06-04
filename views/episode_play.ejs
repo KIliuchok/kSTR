@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head.ejs') %>
+</head>
+<body>
+    <div class="app">
+        <header>
+            <%- include('navbar.ejs') %>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 m-auto pt-4">
+                    <h1 class="text-center mb-5">Source Video for <%= (ep_name.slice(0, ep_name.length - 4)) %></h1>
+                    <p>Default HTML5 Player</p>
+                    
+                    <video controls width="100%" poster="<%= image %>">
+                        <source src="<%= video_path %>" type="video/mp4">
+
+                        Sorry, your browser doesn't support embedded videos.
+                    </video>
+                    <span style="color:#FF0000">B</span><span style="color:#FF4D00">r</span><span style="color:#FF9900">u</span><span style="color:#FFE500">h</span><span style="color:#CCFF00">,</span> <span style="color:#80FF00">i</span><span style="color:#33FF00">s</span> <span style="color:#00FF19">t</span><span style="color:#00FF66">h</span><span style="color:#00FFB3">i</span><span style="color:#00FFFF">s</span> <span style="color:#00B2FF">e</span><span style="color:#0066FF">v</span><span style="color:#0019FF">e</span><span style="color:#3300FF">n</span> <span style="color:#7F00FF">l</span><span style="color:#CC00FF">e</span><span style="color:#FF00E6">g</span><span style="color:#FF0099">a</span><span style="color:#FF004C">l</span>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-8 m-auto pt-4">
+                <link href="/getShowNames"/>
+                <p>VideoJS player</p>
+                    <video
+                        id="my-video"
+                        class="video-js vjs-default-skin vjs-big-play-centered"
+                        controls
+                        preload="auto"
+                        width="640"
+                        height="400"
+                        poster="<%= image %>"
+                        data-setup="{}"
+                    >
+                        <source src="<%= video_path %>" type="video/mp4" />
+                        <p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a
+                        web browser that
+                        <a href="https://videojs.com/html5-video-support/" target="_blank"
+                            >supports HTML5 video</a>
+                        </p>
+                    </video>
+
+                    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+            </div>
+        </div>
+        <footer>
+            <a href="https://github.com/KIliuchok/" class="navbar brand mb-0">GitHub Profile</a>
+        </footer>
+    </div>
+</body>
+</html>

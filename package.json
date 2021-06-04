@@ -8,15 +8,20 @@
   "author": "KIliu",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
     "logrocket": "^1.1.0",
+    "node-fetch": "^2.6.1",
     "node-postgres": "^0.6.2",
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
-    "pq": "0.0.3"
+    "pq": "0.0.3",
+    "react": "^17.0.2",
+    "unirest": "^0.6.0"
   },
   "devDependencies": {},
   "description": ""

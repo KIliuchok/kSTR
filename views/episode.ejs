@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('head.ejs') %>
+    </head>
+<body>
+    <div class="app">
+        <header>
+            <%- include('navbar.ejs') %>
+        </header>
+        
+        <h1>List of All Shows</h1>
+        <ul>
+            <% for (var i = 0; i < list_of_shows.length; i ++) { %>
+                <li><a href="google.com"><%= list_of_shows[i] %></a></li>
+            <% } %>
+        </ul>
+
+        <footer>
+            <a href="https://github.com/KIliuchok/" class="navbar brand mb-0">GitHub Profile</a>
+        </footer>
+    </div>
+</body>
+</html>

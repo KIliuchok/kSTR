@@ -1,0 +1,10 @@
+node_modules
+config.js
+.DS_Store
+db_queries_videos.js
+ffmpeg/ffmpeg
+images/
+Library/
+live/
+pools_config.js
+.vscode/settings.json

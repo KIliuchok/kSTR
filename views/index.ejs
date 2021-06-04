@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>kSTR App</title>
-
-    <script src="https://cdn.lr-ingest.io/LogRocket.min.js" crossorigin="anonymous"></script>
-    <script>window.LogRocket && window.LogRocket.init('pcp3y1/website');</script>
-
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+    <head>
+        <%- include('head.ejs') %>
+    </head>
 <body>
     <div class="app">
-        <header>
-            <nav class="navbar navbar-dark bg-primary">
-                <h1 class="navbar-brand mb-0">kSTR Video Streaming</h1>
-            </nav>
-        </header>
+        <%- include('navbar.ejs') %>
         <div class="container">
             <div class="row">
                 <div class="col-md-8 m-auto pt-4">
-                    <h1 class="text-center mb-5">Sample Section Heading for the ejs</h1>
+                    <h1 class="text-center mb-5">kSTR Video Service</h1>
+                    <p>Please Go to Directory Below to Choose a Show to Watch</p>
+                    <a href="/dir" class="btn btn-primary btn-lg active center" role="button" aria-pressed="true">Video Directory</a>
+                    <p></p>
+                    <p>If the added videos are not in format that can be played by the browser, they are automatically converted to proper format and encoding.</p>
+                    <p>Please give encoding some time, as it is extremely CPU intensive process. You can check the status of the encodings currently in the server console.</p>
+                    <p>Check the ffmpeg crf presets for converting to the h264</p>
+                    <p>Soon there will be an option to keep the old files or automatically delete them (default)</p>
 
-                    <video controls width="100%" poster="<%= image %>">
-                        <source src="<%= video_path %>" type="video/mp4">
-
-                        Sorry, your browser doesn't support embedded videos.
-                    </video>
+                    <iframe width="110" height="200" src="https://www.myinstants.com/instant/bruh/embed/" frameborder="0" scrolling="no"></iframe> <iframe width="110" height="200" src="https://www.myinstants.com/instant/lakad-matatag-normalin-normali/embed/" frameborder="0" scrolling="no"></iframe> <iframe width="110" height="200" src="https://www.myinstants.com/instant/look-at-this-dude/embed/" frameborder="0" scrolling="no"></iframe>
+                   
+                    <span style="color:#FF0000">B</span><span style="color:#FF4D00">r</span><span style="color:#FF9900">u</span><span style="color:#FFE500">h</span><span style="color:#CCFF00">,</span> <span style="color:#80FF00">i</span><span style="color:#33FF00">s</span> <span style="color:#00FF19">t</span><span style="color:#00FF66">h</span><span style="color:#00FFB3">i</span><span style="color:#00FFFF">s</span> <span style="color:#00B2FF">e</span><span style="color:#0066FF">v</span><span style="color:#0019FF">e</span><span style="color:#3300FF">n</span> <span style="color:#7F00FF">l</span><span style="color:#CC00FF">e</span><span style="color:#FF00E6">g</span><span style="color:#FF0099">a</span><span style="color:#FF004C">l</span>
                 </div>
             </div>
         </div>
