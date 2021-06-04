@@ -35,39 +35,6 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/videos/:videName', (req, res) => {
-
-    console.log(req.params.videName);
-    video_name = req.params.videName;
-    fs.access(`${images}/${video_name}.jpg`, fs.F_OK, (err) => {
-
-        if (err) {
-          console.log(err)
-            exec(`ffmpeg/ffmpeg -i '${assets}/TV Shows/Miscellenious/${video_name}' -ss 00:00:10.00 -r 1 -an -vframes 1 -f mjpeg '${images}/${video_name}.jpg'`, (error, stdout, stderr) => {
-                if (error) {
-                    console.log(error);
-                    return;
-                }
-
-                console.log("Thumbnail Redone");
-
-                res.render('index', {
-                    image: `/${images}/${video_name}.jpg`,
-                    video_path: `/video/${video_name}`,
-                    list_of_all_shows: `/getShowNames`
-                });
-            });
-        } else {
-            console.log("Here")
-            res.render('index', {
-                image: `/${images}/${req.params.videName}.jpg`,
-                video_path: `/video/${video_name}`,
-                list_of_all_shows: `/getShowNames`,
-            });
-        }
-    });
-});
-
 router.get('/video/:showName/:epName', (req, res) => {
     console.log("This got accessed");
 
@@ -116,60 +83,6 @@ router.get('/video/:showName/:epName', (req, res) => {
         }
     });
 })
-
-router.get('/video/:videName', (req, res) => {
-
-    console.log("This got accessed");
-    const path = `${assets}/TV Shows/Miscellenious/${req.params.videName}`;
-    console.log(path);
-
-    console.log("In main file:")
-
-    fs.stat(path, (err, stat) => {
-
-        // Handle file not found
-        if (err !== null && err.code === 'ENOENT') {
-            res.sendStatus(404);
-        }
-
-        const fileSize = stat.size
-        const range = req.headers.range
-
-        if (range) {
-
-            const parts = range.replace(/bytes=/, "").split("-");
-
-            const start = parseInt(parts[0], 10);
-            const end = parts[1] ? parseInt(parts[1], 10) : fileSize-1;
-
-            const chunksize = (end-start)+1;
-            const file = fs.createReadStream(path, {start, end});
-            const head = {
-                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-                'Accept-Ranges': 'bytes',
-                'Content-Length': chunksize,
-                'Content-Type': 'video/mp4',
-            }
-
-            res.writeHead(206, head);
-            file.pipe(res);
-        } else {
-            const head = {
-                'Content-Length': fileSize,
-                'Content-Type': 'video/mp4',
-            }
-
-            res.writeHead(200, head);
-            fs.createReadStream(path).pipe(res);
-        }
-    });
-});
-
-// TODO: Replace python code which contacts with Database with native nodejs library
-//
-
-//router.get('/getShowNames', db_videos.getShowNames)
-//router.get('/getEpisodes/:showName', db_videos.getEpisodeNames)
 
 router.get('/dir', (req, res) => {
     exec(`python3.9 python_module/get_all_shows.py`, (err, stdout, stderr) =>{
@@ -264,8 +177,6 @@ router.get('/shows/:showName', (req, res) => {
     console.log(req.params.showName)
     showName = req.params.showName;
 
-    console.log(TVInfo(`${showName}`.slice(0,15)))
-
     exec(`python3.9 python_module/get_all_eps.py '${req.params.showName}'`, (err, stdout, stderr) =>{
         if (err) {
             throw err
@@ -349,6 +260,7 @@ router.get('/shows/:showName/:episode', (req, res) => {
 
 
 // REGISTERING AND LOGGING IN FUNCTIONALITY
+// Not Implemented Yet
 
 router.get('/login',(req,res)=>{
     res.render('login');
@@ -370,9 +282,14 @@ router.get('/logout', (req, res) => {
 })
 
 
-
-
+// TODO: Replace python code which contacts with Database with native nodejs library
 //
+
+//router.get('/getShowNames', db_videos.getShowNames)
+//router.get('/getEpisodes/:showName', db_videos.getEpisodeNames)
+
+
+// Looking for changes in TV Shows directory and updating DB
 
 setInterval(() =>{
     exec (`python3.9 python_module/parse_files.py`, (err, stdout, stderr) =>{
@@ -383,7 +300,7 @@ setInterval(() =>{
         console.log("Scanned Library Files");
         console.log(stdout);
     })
-}, 2500)
+}, 250000)
 
 
 app.use(router);
