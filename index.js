@@ -189,11 +189,11 @@ router.get('/shows/:showName', (req, res) => {
         const ep_images = []
         
         list_of_eps.forEach(element => {
-            fs.access(`${images}/${showName}/${element}.jpg`, fs.F_OK, (err) => {
+            fs.access(`public/${images}/${showName}/${element}.jpg`, fs.F_OK, (err) => {
 
                 if (err) {
                   console.log(err)
-                    exec(`${__dirname}/ffmpeg/ffmpeg -i '${assets}/TV Shows/${showName}/${element}' -ss 00:00:10.00 -r 1 -an -vframes 1 -f mjpeg 'images/${showName}/${element}.jpg'`, (error, stdout, stderr) => {
+                    exec(`${__dirname}/ffmpeg/ffmpeg -i '${assets}/TV Shows/${showName}/${element}' -ss 00:00:10.00 -r 1 -an -vframes 1 -f mjpeg 'public/${images}/${showName}/${element}.jpg'`, (error, stdout, stderr) => {
                         if (error) {
                             console.log(error);
                             return;
@@ -231,11 +231,11 @@ router.get('/shows/:showName/:episode', (req, res) => {
     showName = req.params.showName;
     epName = req.params.episode;
 
-    fs.access(`${images}/${showName}/${epName}.jpg`, fs.F_OK, (err) => {
+    fs.access(`public/${images}/${showName}/${epName}.jpg`, fs.F_OK, (err) => {
 
         if (err) {
           console.log(err)
-            exec(`ffmpeg/ffmpeg -i '${assets}/TV Shows/${showName}/${epName}' -ss 00:00:10.00 -r 1 -an -vframes 1 -f mjpeg '/${images}/${showName}/${epName}.jpg'`, (error, stdout, stderr) => {
+            exec(`ffmpeg/ffmpeg -i '${assets}/TV Shows/${showName}/${epName}' -ss 00:00:10.00 -r 1 -an -vframes 1 -f mjpeg 'public/${images}/${showName}/${epName}.jpg'`, (error, stdout, stderr) => {
                 if (error) {
                     console.log(error);
                     return;
@@ -299,7 +299,7 @@ setInterval(() =>{
         console.log("Scanned Library Files");
         console.log(stdout);
     })
-}, 250000)
+}, 750000)
 
 app.use(router);
 
