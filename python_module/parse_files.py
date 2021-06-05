@@ -11,8 +11,8 @@ config.read(str(pathlib.Path(__file__).parent.absolute()) + '/python_db_config.i
 shows_directory = config.get('directories', 'shows_dir')
 image_directory = config.get('directories', 'images_dir')
 
-# Please point to ffmpeg installation here before launching Web Server
-ffmpeg_location = ''
+# Please point to ffmpeg installation in the config before launching Web Server
+ffmpeg_location = config.get('directories', 'ffmpeg_location')
 
 def find_files_and_dirs():
     dirs = []
