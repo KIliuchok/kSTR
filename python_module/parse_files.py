@@ -11,6 +11,9 @@ config.read(str(pathlib.Path(__file__).parent.absolute()) + '/python_db_config.i
 shows_directory = config.get('directories', 'shows_dir')
 image_directory = config.get('directories', 'images_dir')
 
+# Please point to ffmpeg installation here before launching Web Server
+ffmpeg_location = ''
+
 def find_files_and_dirs():
     dirs = []
     files = []
@@ -75,7 +78,6 @@ def parse_and_add_files(folder_name):
                 print("{0} episode is in DB already".format(file))
                 to_remove.append(file)
 
-    print("TO REMOVE ________________ ", to_remove)
     if len(to_remove) != 0:
         for item in to_remove:
             list_of_files_in_dir.remove(item)
@@ -100,7 +102,9 @@ def if_image_folder_exists(directory):
         path = image_directory + "/" + directory
         os.mkdir(path)
         return
-    
+
+
+# Conversion is done currently if the file format is not in mp4 format without regards to codecs (for now)
 def find_files_for_conversion(directory):
 
     conversion_required = []
@@ -120,12 +124,13 @@ def convert_files(files, directory):
         finales = filename.split('/')
         filename = finales[len(finales) - 1]
         new_path = shows_directory + "/" + directory + "/" + filename
-        process = subprocess.run('/Users/kostia/Desktop/Website/ffmpeg/ffmpeg -i "' 
+        
+        process = subprocess.run(ffmpeg_location + ' -i "' 
         + file + '" -c:a copy -c:v libx264 "' + new_path + '".mp4', shell=True, check=True, stdout=subprocess.PIPE, universal_newlines=True)
 
     for file in files:
         os.remove(file)
-        print("Removed all files that were mentioned")
+        print("Removed all original files that were converted")
 
 
 

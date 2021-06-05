@@ -11,7 +11,7 @@ const fetch = require('node-fetch');
 
 var config = require('./config.js');
 
-// Certificate
+// HTTPS options
 
 options = {
 key: fs.readFileSync(config.secure.privkey_location, 'utf8'),
@@ -30,11 +30,12 @@ app.use(express.urlencoded());
 const assets = config.library;
 const images = config.images;
 
+// Default welcome page
 router.get('/', (req, res) => {
-
     res.render('index');
 });
 
+// Video Streaming Endpoint which pipes the video data
 router.get('/video/:showName/:epName', (req, res) => {
     console.log("This got accessed");
 
@@ -84,6 +85,7 @@ router.get('/video/:showName/:epName', (req, res) => {
     });
 })
 
+// Directory page with list of shows being displayed
 router.get('/dir', (req, res) => {
     exec(`python3.9 python_module/get_all_shows.py`, (err, stdout, stderr) =>{
         if (err) {
@@ -172,7 +174,7 @@ router.get('/dir', (req, res) => {
 
 
 
-
+// Show page depending on the show name
 router.get('/shows/:showName', (req, res) => {
     console.log(req.params.showName)
     showName = req.params.showName;
@@ -224,9 +226,8 @@ router.get('/shows/:showName', (req, res) => {
     })
 })
 
+// Episode Page depending on the 
 router.get('/shows/:showName/:episode', (req, res) => {
-    console.log(req.params.videName);
-
     showName = req.params.showName;
     epName = req.params.episode;
 
@@ -248,7 +249,6 @@ router.get('/shows/:showName/:episode', (req, res) => {
                 });
             });
         } else {
-            console.log("Here")
             res.render('episode_play', {
                 image: `/${images}/${showName}/${epName}.jpg`,
                 video_path: `/video/${showName}/${epName}`,
@@ -283,7 +283,6 @@ router.get('/logout', (req, res) => {
 
 
 // TODO: Replace python code which contacts with Database with native nodejs library
-//
 
 //router.get('/getShowNames', db_videos.getShowNames)
 //router.get('/getEpisodes/:showName', db_videos.getEpisodeNames)
@@ -302,7 +301,6 @@ setInterval(() =>{
     })
 }, 250000)
 
-
 app.use(router);
 
 app.enable('trust proxy');
@@ -311,7 +309,6 @@ app.use((req, res, next) => {
 });
 
 const PORT = process.env.PORT || config.ports.https;
-
 
 var server = https.createServer(options, app).listen(PORT, function(){
   console.log("Express server listening on port " + PORT);
@@ -326,9 +323,4 @@ http.get('*', function(req, res) {
     // res.redirect('https://example.com' + req.url);
 })
 
-// have it listen on 8080
 http.listen(config.ports.http);
-
-//app.listen(PORT, () => {
-//    console.log(`Server listening on port ${PORT}`);
-//})
