@@ -2,7 +2,7 @@
 
 The overall goal of this project is to build a Web Application that would allow user to stream owned and locally stored video files to another devices over the Internet.
 
-Please bear in mind that this is being actively developed and might not be very refined.
+Please bear in mind that this is being actively developed and might not be very refined. Currently it uses EJS, but the frontend framework is potentially subject to change.
 
 Application from this template is running at https://kiliuchok.club
 
@@ -20,14 +20,22 @@ Table "show_names" containing columns: dir_name Varchar(128), name Varchar(128),
 
 *Connection and DB names are configured in python_db_config.ini. The postgres config inside main config.js is currently not utilized.*
 
+Transcoding is required in cases that the input video files are not in a mp4 format, and therefore will not be able to be played on the web in the browser. Currently, the transcoding is done when the files are discovered by the application and the original files are discarded to save disk space. (Subject to Change)
+
+For more information about getting your own certificates and keys, please visit https://letsencrypt.org/
+
 The Movie DB integration retrieves the show details in case it finds a match.
 
 Future Milestones:
  - Migrate the DB interactions to be coded directly in nodejs (Remove dependancy on Python)
  - User Management System
- - Transcoding tweaks + ability to choose the desired resolution(s)
+ - Transcoding tweaks:
+     - Transcoding mp4 files if the codec is not supported
+     - Ability to choose the desired resolution(s), compression levels
+     - Subtitle support
 
 Longer-term Milestones:
  - Client-Only server for streaming the content, but which does not host the actual website
  - Mobile Application
+ - Local Download functionality
  - On the fly transcoding
