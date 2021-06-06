@@ -258,6 +258,10 @@ router.get('/shows/:showName/:episode', (req, res) => {
     });
 })
 
+router.get('/account', (req, res) => {
+    res.render('account');
+})
+
 
 // REGISTERING AND LOGGING IN FUNCTIONALITY
 // Not Implemented Yet
