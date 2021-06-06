@@ -22,6 +22,8 @@ Table "show_names" containing columns: dir_name Varchar(128), name Varchar(128),
 
 Transcoding is required in cases that the input video files are not in a mp4 format, and therefore will not be able to be played on the web in the browser. Currently, the transcoding is done when the files are discovered by the application and the original files are discarded to save disk space. (Subject to Change)
 
+For more information about getting your own certificates and keys, please visit https://letsencrypt.org/
+
 The Movie DB integration retrieves the show details in case it finds a match.
 
 Future Milestones:
